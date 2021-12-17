@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestApp
 {
-    class Account
+    class Account 
     {
        private int id;
        static int nextId = 1;
@@ -32,27 +32,37 @@ namespace TestApp
             return fee;
         }
 
+        //Bizzare method to determine if the fee should be $10
+       
+
+        //Figure out how to only apply a fee if the withdrawal has failed
+
+        public double getFee(int transactionType)
+        {
+            fee = 10;
+            return fee;
+        }
+
         public void setRates(int type)
         {
             if(type == 0)
             {
                 interestRate = 0;
                 overdraft = 0;
-                fee = 0;
             }
             if(type == 1)
             {
                 interestRate = 0.001;
                 overdraft = 0;
-                fee = 10;
             }
             if(type == 2)
             {
                 interestRate = 0.001;
                 overdraft = 500;
-                fee = 10;
             }
         }
+
+        
 
         public double Balance { get; set; }
 

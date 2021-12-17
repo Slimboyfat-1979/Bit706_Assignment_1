@@ -38,7 +38,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.valueInput = new System.Windows.Forms.TextBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -54,7 +53,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Segoe Print", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(360, 437);
+            this.button1.Location = new System.Drawing.Point(360, 410);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(209, 47);
             this.button1.TabIndex = 1;
@@ -65,11 +64,12 @@
             // lblValue
             // 
             this.lblValue.AutoSize = true;
-            this.lblValue.Font = new System.Drawing.Font("Segoe Print", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblValue.Location = new System.Drawing.Point(271, 294);
+            this.lblValue.Font = new System.Drawing.Font("Segoe Print", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblValue.Location = new System.Drawing.Point(356, 319);
             this.lblValue.Name = "lblValue";
-            this.lblValue.Size = new System.Drawing.Size(0, 33);
+            this.lblValue.Size = new System.Drawing.Size(17, 23);
             this.lblValue.TabIndex = 3;
+            this.lblValue.Text = "?";
             this.lblValue.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // label3
@@ -121,7 +121,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe Print", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(264, 234);
+            this.label5.Location = new System.Drawing.Point(255, 234);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(80, 37);
             this.label5.TabIndex = 8;
@@ -137,22 +137,12 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(625, 121);
+            this.checkBox1.Location = new System.Drawing.Point(647, 123);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(96, 17);
+            this.checkBox1.Size = new System.Drawing.Size(91, 17);
             this.checkBox1.TabIndex = 10;
-            this.checkBox1.Text = "View Interest ?";
+            this.checkBox1.Text = "Staff Account";
             this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(625, 162);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(105, 17);
-            this.checkBox2.TabIndex = 11;
-            this.checkBox2.Text = "View Overdraft ?";
-            this.checkBox2.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -160,7 +150,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(832, 517);
-            this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.valueInput);
             this.Controls.Add(this.label5);
@@ -190,7 +179,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox valueInput;
         private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
     }
 }
 

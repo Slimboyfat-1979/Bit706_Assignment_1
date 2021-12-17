@@ -26,13 +26,7 @@ namespace TestApp
         //Constructor adds balance ONLY if the balance is over 1000
         public Omni(double balance, bool i) : base(balance, i)
         {
-            /*
-            if(balance >= 1000)
-            {
-                double balanceWithInterest = Balance * InterestRate;
-                this.Balance = balance + balanceWithInterest;
-            }
-            */
+
         }
     }
 }

@@ -9,7 +9,7 @@ namespace TestApp
     class Investment : Account
     {
        
-        private const double failFee = 10.00;
+        private double failFee = 10.00;
         private const double interestRate = 0.001;
 
         public double FailFee
@@ -78,10 +78,15 @@ namespace TestApp
             }
         }
 
-        public bool failed(double value, double balance)
+        public bool failed(double value, double balance, bool isStaffMember)
         {
             if(value > balance)
             {
+                if(isStaffMember == true)
+                {
+                    failFee = failFee * 0.5;
+                }
+
                 return true;
             }
             else

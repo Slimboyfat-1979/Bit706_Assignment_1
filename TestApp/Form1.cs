@@ -11,15 +11,18 @@ using System.Windows.Forms;
 namespace TestApp
 {
     public partial class Form1 : Form
-    {
+    { 
         int accountType;
         int transactionType;
         double balance;
+        bool staffAccount = false;
         string[] type = { "Everyday", "Investment", "Omni" };
 
         Account a1 = new Account(564.23);
         Investment a2 = new Investment(1000, false);
         Omni a3 = new Omni(1500, true);
+
+        List<string> transactions = new List<string>();
 
       
 
@@ -38,24 +41,20 @@ namespace TestApp
             if(accountType == 0)
             { 
                 lblValue.Text = "ID: " + a1.GetID() + " " + type[0] + "; " + "\nInterest Rate: " + a1.getInterestRate() + "%; " + "Overdraft Limit: $" + a1.getOverdraft() + ";\n" +
-                    "Fee: $" + a1.getFee() + "; " + "Balance: $" + a1.Balance;
+                     "Balance: $" + a1.Balance;
             }
 
             if (accountType == 1)
             {
-                //lblValue.Text = "ID: " + a2.GetID() + " " + type[1] + "; " + "\nInterest Rate: " + a2.getInterestRate() + "%; " + "Overdraft Limit: $" + a2.getOverdraft() + ";\n" +
-                   // "Fee: $" + a2.getFee() + "; " + "Balance: $" + a2.Balance;
-
-
-                //lblValue.Text = type[0] + "; " + "Interest Rate: " + a2.getInterestRate() + "%";
-
-                //lblValue.Text = Convert.ToString(a2.GetID()) + " " + type[1] + " $" + a2.Balance;
+                lblValue.Text = "ID: " + a2.GetID() + " " + type[1] + "; " + "\nInterest Rate: " + a2.getInterestRate() + "%; " + "Overdraft Limit: $" + a2.getOverdraft() + ";\n" +
+                      "Balance: $" + a2.Balance;
             }
 
             if (accountType == 2)
             {
-                double omniBalance = a3.Balance + a3.Overdraft;
-                lblValue.Text = Convert.ToString(a3.GetID()) + " " + type[2] + " $" + omniBalance;
+                
+                lblValue.Text = "ID: " + a3.GetID() + " " + type[2] + "; " + "\nInterest Rate: " + a3.getInterestRate() + "%; " + "Overdraft Limit: $" + a3.getOverdraft() + ";\n" +
+                     "Balance: $" + (a3.Balance);
             }
 
         }
@@ -67,107 +66,140 @@ namespace TestApp
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string transactionValues;
             double value = Convert.ToDouble(valueInput.Text);
 
-            valueInput.Clear();
-            //========Figure out which account do I need to create an object for ===========
-
-            //Logic for what to do if the account type is Everyday
-            if(accountType == 0)
+            if (checkBox1.CheckState == CheckState.Checked)
             {
-                /* Get the balance from the everyday account
-                 * Take the value, and the balance and send to the account deposit/withdrawal
-                 method then reassign the new balance
-                 If the transaction is a withdrawal check to see if there is enough
-                 funds if not display appropriate message*/
+                staffAccount = true;
+            }
 
+            if (checkBox1.CheckState == CheckState.Unchecked)
+            {
+                staffAccount = false;
+            }
+
+            valueInput.Clear();
+
+            //Everyday Account
+            if (accountType == 0)
+            {
                 balance = a1.Balance;
-                if(transactionType == 0)
+
+                //Everyday Deposit
+                if (transactionType == 0)
                 {
                     double transactionDep = a1.deposit(value, balance);
                     a1.Balance = transactionDep;
-                    //lblValue.Text = "Your balance is now $" + Convert.ToString(a1.Balance);
 
-                    lblValue.Text = "ID: " + a1.GetID() + " " + type[0] + "; " + "\nInterest Rate: " + a1.getInterestRate() + "%; " + "Overdraft Limit: $" + a1.getOverdraft() + ";\n" +
-                    "Fee: $" + a1.getFee() + "; " + "Balance: $" + a1.Balance;
+                    transactionValues = "ID: " + a1.GetID() + " " + type[0] + "; " + "\nInterest Rate: " + a1.getInterestRate() + "%; " + "Overdraft Limit: $" + a1.getOverdraft() + ";\n" +
+                    "Fee: $" + a1.getFee() + " Balance: $" + a1.Balance;
+                    lblValue.Text = transactionValues;
+                    transactions.Add(transactionValues);
                 }
-
-                if(transactionType == 1)
+                //Everyday Withdrawal
+                if (transactionType == 1)
                 {
                     double transactionWithdrawal = a1.withdrawal(value, balance);
-                    if(transactionWithdrawal == -1)
+                    if (transactionWithdrawal == -1)
                     {
-                        lblValue.Text = "You do not have enough funds \n to process this transaction :( \n" +
-                            "Your balance is " + a1.Balance;
+                        transactionValues = "You do not have enough funds \n to process this transaction :( \n" +
+                           "You have inccured a fee of $" + a2.getFee() + "\nYour balance is " + a1.Balance;
+                        lblValue.Text = transactionValues;
+                        transactions.Add(transactionValues);
                     }
                     else
                     {
                         a1.Balance = transactionWithdrawal;
-                        //lblValue.Text = "Your balance is now $" + Convert.ToString(a1.Balance);
-
-                        lblValue.Text = "ID: " + a1.GetID() + " " + type[0] + "; " + "\nInterest Rate: " + a1.getInterestRate() + "%; " + "Overdraft Limit: $" + a1.getOverdraft() + ";\n" +
+                        transactionValues = "ID: " + a1.GetID() + " " + type[0] + "; " + "\nInterest Rate: " + a1.getInterestRate() + "%; " + "Overdraft Limit: $" + a1.getOverdraft() + ";\n" +
                         "Fee: $" + a1.getFee() + "; " + "Balance: $" + a1.Balance;
+                        lblValue.Text = transactionValues;
+                        transactions.Add(transactionValues);
                     }
                 }
             }
-            if(accountType == 1)
+
+            //Invesment account
+            if (accountType == 1)
             {
                 /* Calculate the interest by taking the returned balance from the deposit
                   and entering that value into the calculate interest method which
                  is then assigned to the objects balance and printed on the screen */
+
                 balance = a2.Balance;
-                if(transactionType == 0)
+                //Investment Deposit
+                if (transactionType == 0)
                 {
                     double transactionDep = a2.deposit(value, balance);
                     a2.Balance = a2.calcInterest(transactionDep);
-                    lblValue.Text = "Your balance is now $" + Convert.ToString(a2.Balance);
+                    transactionValues = "ID: " + a2.GetID() + " " + type[1] + "; " + "\nInterest Rate: " + a2.getInterestRate() + "%; " + "Overdraft Limit: $" + a2.getOverdraft() + ";\n" +
+                    "Fee: $" + a2.getFee() + "; " + "Balance: $" + a2.Balance;
+                    lblValue.Text = transactionValues;
+                    transactions.Add(transactionValues);
                 }
-
-                if(transactionType == 1)
+                //Investment Withdrawal
+                if (transactionType == 1)
                 {
                     double transactionWith = a2.withdrawal(value, balance);
-                    if(a2.failed(value, balance) == true)
+                    if (a2.failed(value, balance, staffAccount) == true)
                     {
                         a2.Balance = transactionWith;
-                        lblValue.Text = "You incurred a $20 fee for a failed transaction \n your balance is now $" +
-                            Convert.ToString(a2.Balance);
+                        transactionValues = "You have incurred a $10 fee for the failed transaction \n" +
+                            "ID: " + a2.GetID() + " " + type[1] + "\nInterest Rate: " + a2.getInterestRate() + "%; " + "Overdraft Limit: $" + a2.getOverdraft() + ";\n" +
+                   "Fee: $" + a2.getFee(1) + " Balance: $" + a2.Balance;
+                        lblValue.Text = transactionValues;
+                        transactions.Add(transactionValues);
                     }
                     else
                     {
                         a2.Balance = transactionWith;
-                        lblValue.Text = "Your balance is now $" + Convert.ToString(a2.Balance);
-                    }  
-                }  
+                        transactionValues = "ID: " + a2.GetID() + " " + type[1] + "\nInterest Rate: " + a2.getInterestRate() + "%; " + "Overdraft Limit: $" + a2.getOverdraft() + ";\n" +
+                  "Fee: $" + a2.getFee() + " Balance: $" + a2.Balance;
+                        lblValue.Text = transactionValues;
+                        transactions.Add(transactionValues);
+                    }
+                }
             }
-            if(accountType == 2)
+
+            //Omni Account
+            if (accountType == 2)
             {
                 balance = a3.Balance;
-                //lblValue.Text = Convert.ToString(a3.Balance);
-                if(transactionType == 0)
+                //Omni Deposit
+                if (transactionType == 0)
                 {
-                    double transactionDep = a3.deposit(value, balance);
-                    a3.Balance = transactionDep;
-                    lblValue.Text = "You balance is now $" + Convert.ToString(a3.Balance);
-                }
+                    double transactionDep = a3.deposit(value, (balance + a3.Overdraft));
+                    a3.Balance = (transactionDep - a3.Overdraft);
 
-                if(transactionType == 1)
+                    transactionValues = "ID: " + a3.GetID() + " " + type[2] + "; " + "\nInterest Rate: " + a3.getInterestRate() + "%; " + "Overdraft Limit: $" + a3.getOverdraft() + ";\n" +
+                   "Fee: $" + a3.getFee() + "; " + "Balance: $" + a3.Balance;
+                    lblValue.Text = transactionValues;
+                    transactions.Add(transactionValues);
+                }
+                //Omni Withdrawal
+                if (transactionType == 1)
                 {
-                    double transactionWith = a3.withdrawal(value, balance);
-                    if (a3.failed(value, balance) == true)
+                    balance = a3.Balance;
+                    double transactionWith = a3.withdrawal(value, (balance + a3.Overdraft));
+
+                    if (a3.failed(value, (balance + a3.Overdraft), staffAccount) == true)
                     {
-                        a3.Balance = transactionWith;
-                        lblValue.Text = "You incurred a $20 fee for a failed transaction \n your balance is now $" +
-                            Convert.ToString(a3.Balance);
+                        a3.Balance = transactionWith - a3.Overdraft;
+                        transactionValues = "you have incurred a $10 fee for the failed transaction \n" +
+                            "ID: " + a3.GetID() + " " + type[2] + "\nInterest Rate: " + a3.getInterestRate() + "%; " + "Overdraft Limit: $" + a3.getOverdraft() + ";\n" +
+                   "Fee: $" + a3.getFee(1) + " Balance: $" + a3.Balance;
+                        lblValue.Text = transactionValues;
+                        transactions.Add(transactionValues);
                     }
                     else
                     {
-                        a3.Balance = transactionWith;
-                        lblValue.Text = "Your balance is now $" + Convert.ToString(a3.Balance);
+                        a3.Balance = transactionWith - a3.Overdraft;
+                        transactionValues = "ID: " + a3.GetID() + " " + type[2] + "\nInterest Rate: " + a3.getInterestRate() + "%; " + "Overdraft Limit: $" + a3.getOverdraft() + ";\n" +
+                        "Fee: $" + a3.getFee() + " Balance: $" + a3.Balance;
+                        lblValue.Text = transactionValues;
+                        transactions.Add(transactionValues);
                     }
-
                 }
-                
-                //Enter omni details here;
             }
         }
     }
